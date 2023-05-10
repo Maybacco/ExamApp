@@ -24,7 +24,7 @@ namespace ExamApp
         public int IdOrdine { get; set; }
         public DateTime Data { get; set; }
         
-        public List<Prodotto> Prodotti { get; set;} = new List<Prodotto>();
+        public Dictionary<Prodotto, int> Prodotti { get; set;} = new Dictionary<Prodotto, int>();
 
         public Venditore Venditore { get; set; }
 
@@ -36,11 +36,28 @@ namespace ExamApp
             double prezzoTotale = 0;
             foreach(var prod in Prodotti)
             {
-                prezzoTotale += prod.Prezzo;
+                prezzoTotale += prod.Key.Prezzo;
             }
 
             return prezzoTotale;
         }
 
+        public void Scontrino()
+        {
+            var subTotale = 0.0;
+            foreach(var prod in Prodotti)
+            {
+                var currentProd = prod.Key;
+                subTotale += prod.Value * currentProd.Prezzo;
+
+                Console.WriteLine($"{currentProd.Codice} - {currentProd.Nome} | {prod.Value} x {currentProd.Prezzo} | {subTotale}");
+            }
+            
+        }
+
+        public override string? ToString()
+        {
+            return $"Ordine {IdOrdine} di {Venditore.Nome} {Venditore.Cognome}: NoProdotti: {NoProdotti()} - Tot: {Totale()}";
+        }
     }
 }
