@@ -24,17 +24,17 @@ namespace ExamApp
         public int IdOrdine { get; set; }
         public DateTime Data { get; set; }
         
-        public Dictionary<Prodotto, int> Prodotti { get; set;} = new Dictionary<Prodotto, int>();
+        public Dictionary<Prodotto, int> ElencoProdotti { get; set;} = new Dictionary<Prodotto, int>();
 
         public Venditore Venditore { get; set; }
 
 
-        public int NoProdotti() => Prodotti.Count;
+        public int NoProdotti() => ElencoProdotti.Count;
 
         public double Totale()
         {
             double prezzoTotale = 0;
-            foreach(var prod in Prodotti)
+            foreach(var prod in ElencoProdotti)
             {
                 prezzoTotale += prod.Key.Prezzo;
             }
@@ -45,7 +45,7 @@ namespace ExamApp
         public void Scontrino()
         {
             var subTotale = 0.0;
-            foreach(var prod in Prodotti)
+            foreach(var prod in ElencoProdotti)
             {
                 var currentProd = prod.Key;
                 subTotale += prod.Value * currentProd.Prezzo;
