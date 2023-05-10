@@ -25,8 +25,28 @@ namespace ExamApp
         }
     }
 
-    public class CapoMeccanico : Meccanico
+    public class CapoOfficina : Meccanico
     {
+        public List<Ordine> Ordini { get; set; } = new List<Ordine>();
 
+        public void AggiungiOrdine(Ordine ordine, int index)
+        {
+            Ordini.Insert(index, ordine);
+        }
+
+        public int NoOrdini()
+        {
+            return Ordini.Count;
+        }
+
+        public override double Tredicesima()
+        {
+            double totaleOrdini = 0;
+            foreach(var ordine in Ordini)
+            {
+                totaleOrdini += ordine.Totale();
+            }
+            return totaleOrdini + Stipendio * 2;
+        }
     }
 }   
